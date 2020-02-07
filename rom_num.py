@@ -133,7 +133,7 @@ def converter_rom_to_num(rom, num):
             num += 1000
     if rom[-1] == "D":
         if rom[-2] == "C":
-            
+
 
 
 while True:
