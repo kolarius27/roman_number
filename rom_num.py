@@ -121,18 +121,66 @@ def converter_rom_to_num(rom, num):
         print("Result:", num)
 
 
-def converter_rom_to_num(rom, num):
+def converter_rom_to_num(rom, num, gain):
     if rom[-1] == "M":
         if rom[-2] == "C":
-            num += 900
+            new_gain = 900
+            num += new_gain
             rom = rom[0:len(rom)-1]
-        if rom[-2] is in ("D", "L", "X", "V", "I"):
+        elif rom[-2] in ("D", "L", "X", "V", "I"):
             print("Not a Roman number. Try again!")
             return False
         else:
+            new_gain =
             num += 1000
-    if rom[-1] == "D":
+    elif rom[-1] == "D":
         if rom[-2] == "C":
+            num += 400
+            rom = rom[0:len(rom)-1]
+        elif rom[-2] in ("D", "L", "X", "V", "I"):
+            print("Not a Roman number. Try again!")
+            return False
+        else:
+            num += 500
+    elif rom[-1] == "C":
+        if rom[-2] == "X":
+            num += 90
+            rom = rom[0:len(rom) - 1]
+        elif rom[-2] in ("L", "V", "I"):
+            print("Not a Roman number. Try again!")
+            return False
+        else:
+            num += 100
+    elif rom[-1] == "L":
+        if rom[-2] == "X":
+            num += 40
+            rom = rom[0:len(rom) - 1]
+        elif rom[-2] in ("L", "V", "I"):
+            print("Not a Roman number. Try again!")
+            return False
+        else:
+            num += 50
+    elif rom[-1] == "X":
+        if rom[-2] == "I":
+            num += 9
+            rom = rom[0:len(rom) - 1]
+        elif rom[-2] == "V":
+            print("Not a Roman number. Try again!")
+            return False
+        else:
+            num += 10
+    elif rom[-1] == "V":
+        if rom[-2] == "I":
+            num += 4
+            rom = rom[0:len(rom) - 1]
+        elif rom[-2] == "V":
+            print("Not a Roman number. Try again!")
+            return False
+        else:
+            num += 5
+    elif rom[-1] == "I":
+        num += 1
+
 
 
 
