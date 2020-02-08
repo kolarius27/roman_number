@@ -57,7 +57,7 @@ def converter_rom_to_num(rom, num, gain):
     # if length of 'rom' equals 0, goes to else and prints out the result
     # otherwise goes to corresponding if
     if len(rom) > 1:
-        # new attribute: 'new_gain' = value added to result in this loop
+        # new variable: 'new_gain' = value added to result in this loop
         new_gain = 0
         # looks at [-1] (or [-2] position, if needed) and adds new value to 'new_gain'
         # if two characters are needed, pops the last character of 'rom' string
@@ -178,12 +178,19 @@ while True:
         # if input is integer, script uses function for converting numbers to Roman numerals
         converter_num_to_rom(input_number, "")
     except ValueError:
+        # new variable: 'control' = if there is character not representing Roman numeral, adds 1
         control = 0
+        # checks every character in input string
+        # if character is not Roman numeral, adds 1 to 'control' and prints out warning
         for i in range(len(input_value)):
             if input_value[i] not in ("I", "V", "X", "L", "C", "D", "M"):
-                print("Incorrect input.", "'", input_value[i], "'", "doesn't represent any number in Roman numeral system")
+                print("Incorrect input.", "'", input_value[i], "'", "doesn't represent"
+                      " any number in Roman numeral system")
                 control += 1
+        # if every character in input string represents Roman numeral, script uses
+        # function for converting Roman numerals to numbers
         if control == 0:
             converter_rom_to_num(input_value, 0, 0)
+        # if control > 0, calls input
         else:
             continue
