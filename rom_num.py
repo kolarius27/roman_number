@@ -181,7 +181,102 @@ def converter_rom_to_num(rom, num, gain):
     elif rom[-1] == "I":
         num += 1
 
+def converter_rom_to_num(rom, num, gain):
+    if len(rom) > 1:
+        if rom[-1] == "M":
+            if rom[-2] == "C":
+                new_gain = 900
+                num += new_gain
+                rom = rom[0:len(rom)-1]
+            elif rom[-2] in ("D", "L", "X", "V", "I"):
+                print("Not a Roman number. Try again!")
+                return False
+            else:
+                new_gain = 1000
+                num += new_gain
+        elif rom[-1] == "D":
+            if rom[-2] == "C":
+                new_gain = 400
+                num += new_gain
+                rom = rom[0:len(rom)-1]
+            elif rom[-2] in ("D", "L", "X", "V", "I"):
+                print("Not a Roman number. Try again!")
+                return False
+            else:
+                new_gain = 500
+                num += new_gain
+        elif rom[-1] == "C":
+            if rom[-2] == "X":
+                new_gain = 90
+                num += new_gain
+                rom = rom[0:len(rom) - 1]
+            elif rom[-2] in ("L", "V", "I"):
+                print("Not a Roman number. Try again!")
+                return False
+            else:
+                new_gain = 100
+                num += new_gain
+        elif rom[-1] == "L":
+            if rom[-2] == "X":
+                new_gain = 40
+                num += new_gain
+                rom = rom[0:len(rom) - 1]
+            elif rom[-2] in ("L", "V", "I"):
+                print("Not a Roman number. Try again!")
+                return False
+            else:
+                new_gain = 50
+                num += new_gain
+        elif rom[-1] == "X":
+            if rom[-2] == "I":
+                new_gain = 9
+                num += new_gain
+                rom = rom[0:len(rom) - 1]
+            elif rom[-2] == "V":
+                print("Not a Roman number. Try again!")
+                return False
+            else:
+                new_gain = 10
+                num += new_gain
+        elif rom[-1] == "V":
+            if rom[-2] == "I":
+                new_gain = 4
+                num += new_gain
+                rom = rom[0:len(rom) - 1]
+            elif rom[-2] == "V":
+                print("Not a Roman number. Try again!")
+                return False
+            else:
+                new_gain = 5
+                num += new_gain
+        elif rom[-1] == "I":
+            new_gain = 1
+            num += new_gain
+    if len(rom) == 1:
+        if rom == "M":
+            num += 1000
+        elif rom == "D":
+            num += 500
+        elif rom == "C":
+            num += 100
+        elif rom == "L":
+            num += 50
+        elif rom == "X":
+            num += 10
+        elif rom == "V":
+            num += 5
+        elif rom == "I":
+            num += 1
+        print("Result:", num)
+    else:
+        print("Result:", num)
 
+    if new_gain < gain:
+        print("Not a Roman number. Try again!")
+        return False
+    else:
+        new_rom = rom[1:len(rom)]
+        converter_rom_to_num(new_rom, num)
 
 
 while True:
