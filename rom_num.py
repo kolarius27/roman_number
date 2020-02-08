@@ -1,6 +1,11 @@
+# function that converts numbers to Roman numerals
+# attributes: 'num' = input numeric value, 'rom' = result (Roman numeral)
 def converter_num_to_rom(num, rom):
+    # new variable: 'new_num' = residue of input value
     new_num = 0
+    # if 'num' equals 0, goes to else and prints out the result
     if num > 0:
+        # finds correct interval and adds corresponding Roman numeral to 'rom' + new residue
         if num < 4:
             rom += "I"
             new_num = num-1
@@ -30,24 +35,32 @@ def converter_num_to_rom(num, rom):
             new_num = num-100
         elif 400 <= num < 500:
             rom += "CD"
-            new_num = num - 400
+            new_num = num-400
         elif 500 <= num < 900:
             rom += "D"
             new_num = num-500
         elif 900 <= num < 1000:
             rom += "CM"
-            new_num = num - 900
+            new_num = num-900
         elif 1000 <= num:
             rom += "M"
             new_num = num-1000
+        # recursion, attributes: residue of input value and to-be result
         converter_num_to_rom(new_num, rom)
     else:
         print("Result: ", rom)
 
 
+# function that converts Roman numerals to numbers
+# attributes: 'rom' = input Roman numeral, 'num' = result (number), 'gain' = value added to result in previous recursion
 def converter_rom_to_num(rom, num, gain):
+    # if length of 'rom' equals 0, goes to else and prints out the result
+    # otherwise goes to corresponding if
     if len(rom) > 1:
+        # new attribute: 'new_gain' = value added to result in this loop
         new_gain = 0
+        # looks at [-1] (or [-2] position, if needed) and adds new value to 'new_gain'
+        # if two characters are needed, pops the last character of 'rom' string
         if rom[-1] == "M":
             if rom[-2] == "C":
                 new_gain = 900
@@ -61,6 +74,7 @@ def converter_rom_to_num(rom, num, gain):
                 new_gain = 400
                 num += new_gain
                 rom = rom[0:len(rom)-1]
+            # can't be two 'D's in Roman numeral
             elif rom[-2] == "D":
                 print("Not a Roman number. Try again!")
                 return False
@@ -80,6 +94,7 @@ def converter_rom_to_num(rom, num, gain):
                 new_gain = 40
                 num += new_gain
                 rom = rom[0:len(rom) - 1]
+            # can't be two 'L's in Roman numeral
             elif rom[-2] == "L":
                 print("Not a Roman number. Try again!")
                 return False
@@ -99,6 +114,7 @@ def converter_rom_to_num(rom, num, gain):
                 new_gain = 4
                 num += new_gain
                 rom = rom[0:len(rom) - 1]
+            # can't be two 'L's in Roman numeral
             elif rom[-2] == "V":
                 print("Not a Roman number. Try again!")
                 return False
@@ -133,21 +149,33 @@ def converter_rom_to_num(rom, num, gain):
     else:
         print("Result:", num)
         return False
+    # new gain has to be bigger than gain from previous recursion
     if new_gain < gain:
         print("Not a Roman number. Try again!")
         return False
+    # if ok, pops last character from 'rom' string
+    # and goes through recursion
     else:
         new_rom = rom[0:len(rom)-1]
         converter_rom_to_num(new_rom, num, new_gain)
 
 
+print("Hello!\n")
+print("Welcome to 'Roman Numeral Converter'.")
+print("With this tool you can convert numbers to Roman numerals and vice versa.")
+print("If you are short of numbers to convert, just type '0'. Have fun!\n")
+
+
 while True:
+    # tries if input values is integer
     try:
         input_value = input("Input number: ")
         input_number = int(input_value)
+        # if input_number equals 0, script stops
         if input_number == 0:
-            print("Thank you for using 'Roman-to-Arabic/Arabic-to-Roman numeral converter'. Bye!")
+            print("Thank you for using 'Roman Numeral Converter'. Bye!")
             break
+        # if input is integer, script uses function for converting numbers to Roman numerals
         converter_num_to_rom(input_number, "")
     except ValueError:
         control = 0
