@@ -44,145 +44,11 @@ def converter_num_to_rom(num, rom):
     else:
         print("Result: ", rom)
 
-def converter_rom_to_num(rom, num):
-    if len(rom) == 1:
-        if rom == "M":
-            num += 1000
-        elif rom == "D":
-            num += 500
-        elif rom == "C":
-            num += 100
-        elif rom == "L":
-            num += 50
-        elif rom == "X":
-            num += 10
-        elif rom == "V":
-            num += 5
-        elif rom == "I":
-            num += 1
-        print("Result:", num)
-    elif len(rom) > 1:
-        if rom[0] == "M":
-            num += 1000
-        elif rom[0] == "D":
-            if rom[1] is in ("M", "D"):
-                print("Not a Roman number. Try again!")
-                return False
-            else:
-                num += 500
-        elif rom[0] == "C":
-            if rom[1] == "M":
-                num += 900
-                rom = rom[1:len(rom)]
-            elif rom[1] == "D":
-                num += 400
-                rom = rom[1:len(rom)]
-            else:
-                num += 100
-        elif rom[0] == "L":
-            if rom[1] in ("M", "D", "C"):
-                print("Not a Roman number. Try again!")
-                return False
-            else:
-                num += 50
-        elif rom[0] == "X":
-            if rom[1] == "C":
-                num += 90
-                rom = rom[1:len(rom)]
-            elif rom[1] == "L":
-                num += 40
-                rom = rom[1:len(rom)]
-            elif rom[1] in ("M", "D"):
-                print("Not a Roman number. Try again!")
-                return False
-            else:
-                num += 10
-        elif rom[0] == "V":
-            if rom[1] in ("M", "D", "C", "L", "X"):
-                print("Not a Roman number. Try again!")
-                return False
-            else:
-                num += 5
-        elif rom[0] == "I":
-            if rom[1] == "X":
-                num += 9
-                rom = rom[1:len(rom)]
-            elif rom[1] == "V":
-                num += 4
-                rom = rom[1:len(rom)]
-            elif rom[1] in ("M", "D", "C", "L"):
-                print("Not a Roman number. Try again!")
-                return False
-            else:
-                num += 1
-        new_rom = rom[1:len(rom)]
-        converter_rom_to_num(new_rom, num)
-    else:
-        print("Result:", num)
-
 
 def converter_rom_to_num(rom, num, gain):
-    if rom[-1] == "M":
-        if rom[-2] == "C":
-            new_gain = 900
-            num += new_gain
-            rom = rom[0:len(rom)-1]
-        elif rom[-2] in ("D", "L", "X", "V", "I"):
-            print("Not a Roman number. Try again!")
-            return False
-        else:
-            new_gain =
-            num += 1000
-    elif rom[-1] == "D":
-        if rom[-2] == "C":
-            num += 400
-            rom = rom[0:len(rom)-1]
-        elif rom[-2] in ("D", "L", "X", "V", "I"):
-            print("Not a Roman number. Try again!")
-            return False
-        else:
-            num += 500
-    elif rom[-1] == "C":
-        if rom[-2] == "X":
-            num += 90
-            rom = rom[0:len(rom) - 1]
-        elif rom[-2] in ("L", "V", "I"):
-            print("Not a Roman number. Try again!")
-            return False
-        else:
-            num += 100
-    elif rom[-1] == "L":
-        if rom[-2] == "X":
-            num += 40
-            rom = rom[0:len(rom) - 1]
-        elif rom[-2] in ("L", "V", "I"):
-            print("Not a Roman number. Try again!")
-            return False
-        else:
-            num += 50
-    elif rom[-1] == "X":
-        if rom[-2] == "I":
-            num += 9
-            rom = rom[0:len(rom) - 1]
-        elif rom[-2] == "V":
-            print("Not a Roman number. Try again!")
-            return False
-        else:
-            num += 10
-    elif rom[-1] == "V":
-        if rom[-2] == "I":
-            num += 4
-            rom = rom[0:len(rom) - 1]
-        elif rom[-2] == "V":
-            print("Not a Roman number. Try again!")
-            return False
-        else:
-            num += 5
-    elif rom[-1] == "I":
-        num += 1
 
-def converter_rom_to_num(rom, num, gain):
     if len(rom) > 1:
+        new_gain = 0
         if rom[-1] == "M":
             if rom[-2] == "C":
                 new_gain = 900
@@ -252,31 +118,37 @@ def converter_rom_to_num(rom, num, gain):
         elif rom[-1] == "I":
             new_gain = 1
             num += new_gain
-    if len(rom) == 1:
+    elif len(rom) == 1:
         if rom == "M":
-            num += 1000
+            new_gain = 1000
+            num += new_gain
         elif rom == "D":
-            num += 500
+            new_gain = 500
+            num += new_gain
         elif rom == "C":
-            num += 100
+            new_gain = 100
+            num += new_gain
         elif rom == "L":
-            num += 50
+            new_gain = 50
+            num += new_gain
         elif rom == "X":
-            num += 10
+            new_gain = 10
+            num += new_gain
         elif rom == "V":
-            num += 5
+            new_gain = 5
+            num += new_gain
         elif rom == "I":
-            num += 1
-        print("Result:", num)
+            new_gain = 1
+            num += new_gain
     else:
         print("Result:", num)
-
+        return False
     if new_gain < gain:
         print("Not a Roman number. Try again!")
         return False
     else:
-        new_rom = rom[1:len(rom)]
-        converter_rom_to_num(new_rom, num)
+        new_rom = rom[0:len(rom)-1]
+        converter_rom_to_num(new_rom, num, new_gain)
 
 
 while True:
@@ -294,6 +166,6 @@ while True:
                 print("Incorrect input.", "'", input_value[i], "'", "doesn't represent any number in Roman numeral system")
                 control += 1
         if control == 0:
-            converter_rom_to_num(input_value, 0)
+            converter_rom_to_num(input_value, 0, 0)
         else:
             continue
